@@ -38,10 +38,9 @@ bool State::move(char ch) {
     if (valueIsPossible(ch))
         value = ch;
     else {
-        // do we give hint to user?
+        // do we give hint to player?
         cerr << "Could not put " << ch << " here." << endl;
     }
-    // emit value changed signal?
     return true;
 }
 
@@ -62,21 +61,13 @@ void State::remove() {
 // -----------------------------------------------------------------------------
 // print state possibilities
 void State::print(ostream &out) const {
+    out << value << " ";
     for (int k = 1; k < 10; ++k) {
-        if ((possibilities >> k) & 1) cout << k;
+        if ((possibilities >> k) & 1) out << k;
         else cout << '-';
     }
 }
 
-// -----------------------------------------------------------------------------
-bool State::checkInput(char ch) {
-    return ch == '-' || (isdigit(ch) && ch != '0');
-}
-
-// -----------------------------------------------------------------------------
-bool State::valueIsPossible(char ch) {
-    return (possibilities >> (ch - '0')) & 1;
-}
 
 // -----------------------------------------------------------------------------
 ostream& operator<<(ostream& out, const State& state) {

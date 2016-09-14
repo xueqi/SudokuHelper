@@ -11,25 +11,28 @@
 
 #include "tools.hpp"
 
-#define POSSIBLE_ALL 0x3fe
+#define POSSIBLE_ALL 0b1111111110 // 0x3fe
 #define POSSIBLE_NONE 0x0
 
 class State {
 private:
     short possibilities;
     char value;
-    bool fixed; // initialized by game
+    bool fixed; 
     
     // helper function
-    bool checkInput(char ch);
-    bool valueIsPossible(char ch);
+    // check if input is valid
+    bool checkInput(char ch) {return ch == '-' || (isdigit(ch) && ch != '0');}
+    // check if input is valid for current possible
+    bool valueIsPossible(char ch) {return (possibilities >> (ch - '0')) & 1;}
+    
 public:
     State(char initChar);
     ~State() = default;
     bool move(char ch);
     void remove();
     void print(ostream &out) const;
-};
+}; /* end class State */
 
 ostream& operator<<(ostream& out, const State& state);
 
