@@ -8,10 +8,12 @@
 
 #include "state.hpp"
 
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 State::State(char initChar) : value(initChar) {
     if (!checkInput(value)) {
-        fatal("Wrong input for State Constructor: %c\nExpects 1 to 9", value);
+        possibilities = POSSIBLE_NONE;
+        say("Wrong input for State Constructor: %c\nExpects 1 to 9", value);
+        return;
     }
     if (value == '-') {
         possibilities = POSSIBLE_ALL;
@@ -22,13 +24,14 @@ State::State(char initChar) : value(initChar) {
     }
 }
 
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 // set state to ch. if success, return true, else return false;
 bool State::move(char ch) {
     if (fixed) {
         // do we call fatal here? fatal will terminate the program
         // but we still need give user chance to continue
-        fatal("Could not change the value");
+        say("Could not change the value");
+        return false;
     }
     if (!checkInput(ch)) {
         cerr << "Wrong input for State value. Expects 1 to 9" << endl;
@@ -40,37 +43,34 @@ bool State::move(char ch) {
     else {
         // do we give hint to player?
         cerr << "Could not put " << ch << " here." << endl;
+        return false;
     }
     return true;
 }
 
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 // behavior:
 //   set state empty
 void State::remove() {
     if (fixed) {
         // do we call fatal here? fatal will terminate the program
         // but we still need give user chance to continue
-        fatal("Could not change the value");
+        say("Could not change the value");
+        return;
     }
     value = '-';
     // emit value changed signal?
     
 }
 
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 // print state possibilities
-void State::print(ostream &out) const {
+ostream& State::print(ostream &out) const {
     out << value << " ";
     for (int k = 1; k < 10; ++k) {
         if ((possibilities >> k) & 1) out << k;
         else cout << '-';
     }
-}
-
-
-// -----------------------------------------------------------------------------
-ostream& operator<<(ostream& out, const State& state) {
-    state.print(out);
     return out;
 }
+

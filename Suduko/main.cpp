@@ -34,11 +34,9 @@ void testState() {
     cout << "sq2: " << sq2 << endl;
     
     cout << "===============================================================\n";
-    cout << "construct A invalid State (should fail)" << endl;
-    /* this will cause fatal to exit the program.
+    cout << "construct A invalid State (should say Wrong input)" << endl;
     State sq3('0');
     cout << "sq3: " << sq3 << endl;
-    */
     
     cout << "===============================================================\n";
     // test move
@@ -48,12 +46,12 @@ void testState() {
 
     
     cout << "===============================================================\n";
-    cout << "move sq1 to 2 (should fail)" << endl;
-    /*
+    cout << "move sq1 to 2 (should say Could not change the value )" << endl;
+
     // sq1 could not move
     sq1.move('2'); // bang!
     cout << "sq1: " << sq1 << endl;
-    */
+
     
     // test move to invalid char
     cout << "===============================================================\n";
@@ -67,11 +65,10 @@ void testState() {
     cout << "sq2: " << sq2 << endl;
     
     cout << "===============================================================\n";
-    cout << "remove sq1, should fail" << endl;
-    /*
+    cout << "remove sq1, should Could not change the value" << endl;
     sq1.remove();
     cout << "sq1: " << sq1 << endl;
-    */
+    
     cout << "===============================================================\n";
     cout << "Test state ended.\n";
     

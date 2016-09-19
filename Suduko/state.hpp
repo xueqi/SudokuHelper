@@ -11,7 +11,7 @@
 
 #include "tools.hpp"
 
-#define POSSIBLE_ALL 0b1111111110 // 0x3fe
+#define POSSIBLE_ALL  0x3fe
 #define POSSIBLE_NONE 0x0
 
 class State {
@@ -31,9 +31,9 @@ public:
     ~State() = default;
     bool move(char ch);
     void remove();
-    void print(ostream &out) const;
+    ostream& print(ostream &out) const;
 }; /* end class State */
 
-ostream& operator<<(ostream& out, const State& state);
+inline ostream& operator<<(ostream& out, const State& s) {return s.print(out);}
 
 #endif /* state_hpp */
