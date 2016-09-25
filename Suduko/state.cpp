@@ -10,7 +10,7 @@
 
 // ---------------------------------------------------------------------------
 State::State(char initChar) : value(initChar) {
-    if (!checkInput(value)) {
+    if (!validInput(value)) {
         possibilities = POSSIBLE_NONE;
         say("Wrong input for State Constructor: %c\nExpects 1 to 9", value);
         return;
@@ -33,7 +33,7 @@ bool State::move(char ch) {
         say("Could not change the value");
         return false;
     }
-    if (!checkInput(ch)) {
+    if (!validInput(ch)) {
         cerr << "Wrong input for State value. Expects 1 to 9" << endl;
         return false;
     }
@@ -66,11 +66,36 @@ void State::remove() {
 // ---------------------------------------------------------------------------
 // print state possibilities
 ostream& State::print(ostream &out) const {
-    out << value << " ";
+    out << "Value " << value << ", Possible: ";
     for (int k = 1; k < 10; ++k) {
         if ((possibilities >> k) & 1) out << k;
         else cout << '-';
     }
+    return out;
+}
+
+// ---------------------------------------------------------------------------
+// Square
+Square::Square(char initChar, sint row, sint col)
+    : State(initChar), row(row), col(col) {
+    cerr << "Square " << row << ", " << col << " constructed"<< endl;
+        
+}
+
+// ---------------------------------------------------------------------------
+Square::Square() : State('-'), row(0), col(0) {
+    cerr << "Constructing empty square " << row << ", " << col << endl;
+}
+
+// ---------------------------------------------------------------------------
+Square::~Square() {
+    cerr << "Deleting Square " << row << ", " << col << endl;
+}
+
+// ---------------------------------------------------------------------------
+ostream& Square::print(ostream& out) const {
+    out << "Square [" << row << ", " << col << "] ";
+    State::print(out);
     return out;
 }
 

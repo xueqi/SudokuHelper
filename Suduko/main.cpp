@@ -10,13 +10,29 @@
 #include "state.hpp"
 
 void testState();
+void testSquare();
 
 // -----------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
     banner();
-    testState();
+    testSquare();
+    //testState();
     bye();
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+void testSquare() {
+    cout << "\nconstruct square with default constructor\n";
+    Square sq1;
+    cout << sq1 << endl;
+    cout << "\nconstruct square with three parameter\n";
+    Square sq2('4', 3, 2);
+    cout << sq2 << endl;
+    cout << "\nconstruct square with three parameters and no value\n";
+    Square sq3('-', 4, 5);
+    cout << sq3 << endl;
+    cout << "Done testing square\n\n";
 }
 
 // -----------------------------------------------------------------------------
