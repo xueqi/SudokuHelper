@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
 void testBoard() {
     cout << "Beginning testing board:" << endl;
     cout << "===============================================================\n";
-    Board board("/Users/xueqi/courses/CSCI6626_OOPC++/Sudoku/Suduko/Suduko/sudo-test1.txt");
+    Board board("sudo-test1.txt");
     cout << board << endl;
     cout << "Done testing board\n";
 }

@@ -20,7 +20,6 @@ Board::Board(const char * filename) {
         for (int col = 1; col <= NCOLS; ++col) {
             char c;
             inStream >> c;
-            cout << row << " "  << col << " "  << c << endl;
             if (!inStream) {
                 cerr << "Error reading row " << row << " col " << col << endl;
                 successRead = false;
@@ -28,21 +27,20 @@ Board::Board(const char * filename) {
             }
             sub(row, col) = Square(c, row, col);
         }
-        if (!successRead) break;
-        char newline = '\0';
-        inStream >> newline;
-        if (!inStream || newline != '\n') {
-            cout << "newline = " << (int)newline << endl;
-            successRead = false;
-            break;
+        if (successRead) {
+            char newline = '\0';
+            inStream >> newline;
+            if (!inStream || newline != '\n') {
+                successRead = false;
+            }
         }
+        if (!successRead) break;
     }
     if (successRead) {
         char tmp;
         inStream >> skipws >> tmp;
         if (!inStream.eof()) successRead = false;
-    }
-    if (!successRead) {
+    } else {
         fatal("File format wrong, check file content in %s", filename);
     }
 }
@@ -53,7 +51,8 @@ Board::~Board() {
 }
 
 // -----------------------------------------------------------------------------
-// Square access.
+// Square access. No boundary check currently.
+// Caller should do the boundary check.
 Square& Board::sub(int row, int col) {
     return bd[(row - 1) * NCOLS + col - 1];
 }
