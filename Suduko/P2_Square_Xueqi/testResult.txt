@@ -1,0 +1,61 @@
+
+--------------------------------------------------------
+    Xueqi Liu
+    CS 6626
+    Sun Sep 25 2016 11:07:41
+----------------------------------------------------------
+===============================================================
+
+construct square with default constructor
+Constructing empty square 0, 0
+Square [0, 0] Value -, Possible: 123456789
+===============================================================
+
+construct square with three parameter
+Square 3, 2 constructed
+Square [3, 2] Value 4, Possible: ---------
+===============================================================
+
+construct square with three parameters and no value
+Square 4, 5 constructed
+Square [4, 5] Value -, Possible: 123456789
+Done testing square
+
+Deleting Square 4, 5
+Deleting Square 3, 2
+Deleting Square 0, 0
+State structure size: 4
+===============================================================
+construct A valid Fixed State
+sq1: Value 1, Possible: ---------
+===============================================================
+construct A valid empty State
+sq2: Value -, Possible: 123456789
+===============================================================
+construct A invalid State (should say Wrong input)
+Wrong input for State Constructor: 0
+Expects 1 to 9
+sq3: Value 0, Possible: ---------
+===============================================================
+move sq2 to 2
+sq2: Value 2, Possible: 123456789
+===============================================================
+move sq1 to 2 (should say Could not change the value )
+Could not change the value
+sq1: Value 1, Possible: ---------
+===============================================================
+move sq2 to invlid value "a". sq2 should not change
+Wrong input for State value. Expects 1 to 9
+sq2: Value 2, Possible: 123456789
+===============================================================
+remove sq2
+sq2: Value -, Possible: 123456789
+===============================================================
+remove sq1, should Could not change the value
+Could not change the value
+sq1: Value 1, Possible: ---------
+===============================================================
+Test state ended.
+
+Normal termination.
+Program ended with exit code: 0

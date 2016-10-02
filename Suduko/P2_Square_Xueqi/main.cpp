@@ -8,39 +8,27 @@
 
 #include "tools.hpp"
 #include "state.hpp"
-#include "board.hpp"
+
 void testState();
 void testSquare();
-void testBoard();
 
 // -----------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
     banner();
-    testBoard();
     testSquare();
     testState();
     bye();
     return 0;
 }
-// -----------------------------------------------------------------------------
-void testBoard() {
-    cout << "Beginning testing board:" << endl;
-    cout << "===============================================================\n";
-    Board board("/Users/xueqi/courses/CSCI6626_OOPC++/Sudoku/Suduko/Suduko/sudo-test1.txt");
-    cout << board << endl;
-    cout << "Done testing board\n";
-}
+
 // -----------------------------------------------------------------------------
 void testSquare() {
-    cout << "===============================================================\n";
     cout << "\nconstruct square with default constructor\n";
     Square sq1;
     cout << sq1 << endl;
-    cout << "===============================================================\n";
     cout << "\nconstruct square with three parameter\n";
     Square sq2('4', 3, 2);
     cout << sq2 << endl;
-    cout << "===============================================================\n";
     cout << "\nconstruct square with three parameters and no value\n";
     Square sq3('-', 4, 5);
     cout << sq3 << endl;
