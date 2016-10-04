@@ -14,21 +14,20 @@
 #define POSSIBLE_ALL  0x3fe
 #define POSSIBLE_NONE 0x0
 
+class Cluster;
 typedef short int sint;
 class State {
 protected:
-    short possibilities;
+    sint possibilities;
     char value;
     bool fixed; 
 private:
     // check if input is valid for current possible
-    bool valueIsPossible(char ch) {return (possibilities >> (ch - '0')) & 1;}
     
 public:
     State() = default;
     State(char initChar);
     ~State() = default;
-    bool move(char ch);
     void remove();
     ostream& print(ostream &out) const;
     
@@ -42,12 +41,18 @@ class Square : public State {
 private:
     sint row;
     sint col;
-
+    vector<Cluster*> clues;
+    bool valueIsPossible(char ch) {return (possibilities >> (ch - '0')) & 1;}
+    int numPossibilities() const;
 public:
     Square(char initChar, sint row, sint col);
     Square();
     ~Square();
     ostream& print(ostream&) const;
+    void addCluster(Cluster*);
+    void turnOff(int n);
+    void move(char ch);
+
     
 };
 
