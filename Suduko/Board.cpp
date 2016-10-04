@@ -7,6 +7,7 @@
 //
 
 #include "Board.hpp"
+const char *Board::clusterName[] = {"BOX", "ROW", "ROL"};
 
 // -----------------------------------------------------------------------------
 Board::Board(const char * filename) {
@@ -43,7 +44,41 @@ Board::Board(const char * filename) {
     } else {
         fatal("File format wrong, check file content in %s", filename);
     }
+    inStream.close();
+    
+    buildClusters();
+    
 }
+// -----------------------------------------------------------------------------
+//
+void Board::buildClusters() {
+    vector<Square*> squares(9);
+    for (int row = 1; row <= NROWS; ++row) {
+        for(int col = 1; col <= NCOLS; ++col) {
+            squares[col - 1] = &sub(row, col);
+        }
+        clusters.push_back(Cluster(ROW, squares));
+    }
+    for (int col = 1; col <= NCOLS; ++col) {
+        for (int row = 1; row <=NROWS; ++row) {
+            squares[row - 1] = &sub(row, col);
+        }
+        clusters.push_back(Cluster(COL, squares));
+    }
+    for (int m = 0; m < 3; ++m) { // row of box
+        for (int n = 0; n < 3; ++n) { // col of box
+            int count = 1;
+            for (int p = 0; p < 3; ++p) { // row in box
+                for (int q = 0; q < 3; ++q) { // col in box
+                    int row = m * 3 + p + 1, col = n * 3 + q + 1;
+                    squares[count++] = &sub(row, col);
+                }
+            }
+            clusters.push_back(Cluster(BOX, squares));
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // TODO: Set the destructor to default after done
 Board::~Board() {

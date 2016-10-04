@@ -10,14 +10,20 @@
 #define Board_hpp
 
 #include "tools.hpp"
-#include "state.hpp"
-
+#include "Square.hpp"
+#include "Cluster.hpp"
 #define NCOLS 9
 #define NROWS 9
 #define NSQUARES (NCOLS * NROWS)
+
 class Board {
 private:
     Square bd[NSQUARES];
+    vector<Cluster> clusters;
+    
+    static const char * clusterName[];
+    void buildClusters();
+    
 public:
     Board(const char * infile);
     ~Board();

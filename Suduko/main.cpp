@@ -7,7 +7,7 @@
 //
 
 #include "tools.hpp"
-#include "state.hpp"
+#include "Square.hpp"
 #include "board.hpp"
 void testState();
 void testSquare();
@@ -44,6 +44,32 @@ void testSquare() {
     cout << "\nconstruct square with three parameters and no value\n";
     Square sq3('-', 4, 5);
     cout << sq3 << endl;
+    cout << "===============================================================\n";
+    cout << "\nturnOff possibility of 1\n";
+    sq3.turnOff(1);
+    cout << sq3 << endl;
+    cout << "===============================================================\n";
+    // test move
+    cout << "move sq2 to 2" << endl;
+    sq2.move('2');
+    cout << "sq2: " << sq2 << endl;
+    
+    
+    cout << "===============================================================\n";
+    cout << "move sq1 to 2 (should say Could not change the value )" << endl;
+    
+    // sq1 could not move
+    sq1.move('2'); // bang!
+    cout << "sq1: " << sq1 << endl;
+    
+    
+    // test move to invalid char
+    cout << "===============================================================\n";
+    cout << "move sq2 to invlid value \"a\". sq2 should not change" << endl;
+    sq2.move('a');
+    cout << "sq2: " << sq2 << endl;
+    
+    cout << "===============================================================\n";
     cout << "Done testing square\n\n";
 }
 
@@ -66,28 +92,7 @@ void testState() {
     State sq3('0');
     cout << "sq3: " << sq3 << endl;
     
-    cout << "===============================================================\n";
-    // test move
-    cout << "move sq2 to 2" << endl;
-    sq2.move('2');
-    cout << "sq2: " << sq2 << endl;
 
-    
-    cout << "===============================================================\n";
-    cout << "move sq1 to 2 (should say Could not change the value )" << endl;
-
-    // sq1 could not move
-    sq1.move('2'); // bang!
-    cout << "sq1: " << sq1 << endl;
-
-    
-    // test move to invalid char
-    cout << "===============================================================\n";
-    cout << "move sq2 to invlid value \"a\". sq2 should not change" << endl;
-    sq2.move('a');
-    cout << "sq2: " << sq2 << endl;
-    
-    cout << "===============================================================\n";
     cout << "remove sq2" << endl;
     sq2.remove();
     cout << "sq2: " << sq2 << endl;
