@@ -8,28 +8,58 @@
 
 #include "tools.hpp"
 #include "Square.hpp"
-#include "board.hpp"
+#include "Board.hpp"
+#include "Cluster.hpp"
+
+// -----------------------------------------------------------------------------
 void testState();
 void testSquare();
 void testBoard();
+void testCluster();
 
 // -----------------------------------------------------------------------------
 int main(int argc, const char * argv[]) {
     banner();
+    testCluster();
     testBoard();
     testSquare();
     testState();
     bye();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+void testCluster() {
+    cout << "===============================================================\n";
+    cout << "Begin testing cluster\n";
+    // create 9 squares;
+    vector<Square *> squares;
+    for (char ch = 1; ch <= 9; ch++) {
+        squares.push_back(new Square('-', 1, ch));
+    }
+    Cluster cluster(ROW, squares);
+    cout << cluster << endl;
+    squares[0]->move('1');
+    squares[5]->move('3');
+    cout << "All squares should turn off 1 and 3\n";
+    cout << cluster << endl;
+    for (Square * square : squares) {
+        delete square;
+    }
+    cout << "End testing cluster\n";
+    cout << "===============================================================\n";
+}
+
 // -----------------------------------------------------------------------------
 void testBoard() {
     cout << "Beginning testing board:" << endl;
     cout << "===============================================================\n";
     Board board("sudo-test1.txt");
     cout << board << endl;
+    board.printCluster(cout);
     cout << "Done testing board\n";
 }
+
 // -----------------------------------------------------------------------------
 void testSquare() {
     cout << "===============================================================\n";
@@ -76,31 +106,30 @@ void testSquare() {
 // -----------------------------------------------------------------------------
 void testState() {
     // order of member in State class would change the size of State instance;
-    cout << "State structure size: " << sizeof(State) << endl;
     cout << "===============================================================\n";
     cout << "construct A valid Fixed State" << endl;
-    State sq1('1');
-    cout << "sq1: " << sq1 << endl;
+    State state1('1');
+    cout << "state1: " << state1 << endl;
     
     cout << "===============================================================\n";
     cout << "construct A valid empty State" << endl;
-    State sq2('-');
-    cout << "sq2: " << sq2 << endl;
+    State state2('-');
+    cout << "state2: " << state2 << endl;
     
     cout << "===============================================================\n";
     cout << "construct A invalid State (should say Wrong input)" << endl;
-    State sq3('0');
-    cout << "sq3: " << sq3 << endl;
+    State state3('0');
+    cout << "state3: " << state3 << endl;
     
 
-    cout << "remove sq2" << endl;
-    sq2.remove();
-    cout << "sq2: " << sq2 << endl;
+    cout << "remove state2" << endl;
+    state2.remove();
+    cout << "state2: " << state2 << endl;
     
     cout << "===============================================================\n";
     cout << "remove sq1, should Could not change the value" << endl;
-    sq1.remove();
-    cout << "sq1: " << sq1 << endl;
+    state1.remove();
+    cout << "state1: " << state1 << endl;
     
     cout << "===============================================================\n";
     cout << "Test state ended.\n";

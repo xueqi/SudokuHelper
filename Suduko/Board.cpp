@@ -7,7 +7,6 @@
 //
 
 #include "Board.hpp"
-const char *Board::clusterName[] = {"BOX", "ROW", "ROL"};
 
 // -----------------------------------------------------------------------------
 Board::Board(const char * filename) {
@@ -48,33 +47,41 @@ Board::Board(const char * filename) {
     
     buildClusters();
     
+    // initial shoops;
+    for (Square& square : bd) {
+        square.move();
+    }
+    
 }
 // -----------------------------------------------------------------------------
 //
 void Board::buildClusters() {
     vector<Square*> squares(9);
+    // build row clusters
     for (int row = 1; row <= NROWS; ++row) {
         for(int col = 1; col <= NCOLS; ++col) {
             squares[col - 1] = &sub(row, col);
         }
-        clusters.push_back(Cluster(ROW, squares));
+        clues.push_back(new Cluster(ROW, squares));
     }
+    // build col clusters
     for (int col = 1; col <= NCOLS; ++col) {
         for (int row = 1; row <=NROWS; ++row) {
             squares[row - 1] = &sub(row, col);
         }
-        clusters.push_back(Cluster(COL, squares));
+        clues.push_back(new Cluster(COL, squares));
     }
+    // build box clusters
     for (int m = 0; m < 3; ++m) { // row of box
         for (int n = 0; n < 3; ++n) { // col of box
-            int count = 1;
+            int count = 0;
             for (int p = 0; p < 3; ++p) { // row in box
                 for (int q = 0; q < 3; ++q) { // col in box
                     int row = m * 3 + p + 1, col = n * 3 + q + 1;
                     squares[count++] = &sub(row, col);
                 }
             }
-            clusters.push_back(Cluster(BOX, squares));
+            clues.push_back(new Cluster(BOX, squares));
         }
     }
 }
@@ -82,6 +89,9 @@ void Board::buildClusters() {
 // -----------------------------------------------------------------------------
 // TODO: Set the destructor to default after done
 Board::~Board() {
+    for (Cluster * clue : clues) {
+        delete clue;
+    }
     cerr << "Calling Board Destructor" << endl;
 }
 
@@ -92,12 +102,19 @@ Square& Board::sub(int row, int col) {
     return bd[(row - 1) * NCOLS + col - 1];
 }
 // -----------------------------------------------------------------------------
-ostream& Board::print(ostream& out) {
+ostream& Board::print(ostream& out) const {
     for (int row = 1; row <= NROWS; ++row) {
         for (int col = 1; col <= NCOLS; ++col) {
-            out << sub(row, col) << endl;
+            out << bd[(row - 1) * NCOLS + col - 1] << endl;
         }
         out << endl;
     }
     return out;
+}
+
+// -----------------------------------------------------------------------------
+void Board::printCluster(ostream& out) {
+    for (Cluster* cl : clues) {
+        out << *cl << endl;
+    }
 }

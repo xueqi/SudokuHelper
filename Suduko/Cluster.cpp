@@ -7,6 +7,7 @@
 //
 
 #include "Cluster.hpp"
+const char *Cluster::clusterName[] = {"BOX", "ROW", "COL"};
 
 // ----------------------------------------------------------------------------
 Cluster::Cluster(ClusterT ctype, vector<Square*> squares) {
@@ -18,11 +19,6 @@ Cluster::Cluster(ClusterT ctype, vector<Square*> squares) {
 }
 
 // ----------------------------------------------------------------------------
-void Cluster::addSquare(Square *square) {
-    squares.push_back(square);
-}
-
-// ----------------------------------------------------------------------------
 void Cluster::shoop(char val) {
     for (Square * square : squares) {
         square->turnOff(val - '0');
@@ -31,8 +27,11 @@ void Cluster::shoop(char val) {
 
 // ----------------------------------------------------------------------------
 ostream& Cluster::print(ostream & out) const {
+    out << clusterName[clusterType] << " Cluster" << endl;
     for (Square* square : squares) {
         square->print(out);
+        out << endl;
     }
+    out << endl;
     return out;
 }

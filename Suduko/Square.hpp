@@ -29,6 +29,7 @@ public:
     State(char initChar);
     ~State() = default;
     void remove();
+    void move(char ch);
     ostream& print(ostream &out) const;
     
     // static members
@@ -51,7 +52,7 @@ public:
     ostream& print(ostream&) const;
     void addCluster(Cluster*);
     void turnOff(int n);
-    void move(char ch);
+    void move(char ch = 0);
 
     
 };

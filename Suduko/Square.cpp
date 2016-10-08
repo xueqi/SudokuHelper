@@ -36,7 +36,8 @@ void Square::addCluster(Cluster * cluster) {
 int Square::numPossibilities() const {
     int n = 0, pos = possibilities >> 1;
     while(pos > 0) {
-        n++; pos >>= 1;
+        if (pos & 1) n++;
+        pos >>= 1;
     }
     return n;
 }
@@ -45,23 +46,9 @@ int Square::numPossibilities() const {
 // ---------------------------------------------------------------------------
 // set squre to ch. if success, return true, else return false;
 void Square::move(char ch) {
-    if (fixed) {
-        // do we call fatal here? fatal will terminate the program
-        // but we still need give user chance to continue
-        say("Could not change the value");
-    }
-    if (!validInput(ch)) {
-        cerr << "Wrong input for State value. Expects 1 to 9" << endl;
-    }
-    // check if value is possible?
-    if (valueIsPossible(ch)) {
-        value = ch;
-        for (Cluster * cluster : clues) {
-            cluster->shoop(ch);
-        }
-    } else {
-        // do we give hint to player?
-        cerr << "Could not put " << ch << " here." << endl;
+    State::move(ch);
+    for (Cluster * cluster : clues) {
+        cluster->shoop(value);
     }
 }
 
@@ -124,4 +111,17 @@ ostream& State::print(ostream &out) const {
     return out;
 }
 
+void State::move(char ch) {
+    if (ch != 0 && fixed) {
+        // do we call fatal here? fatal will terminate the program
+        // but we still need give user chance to continue
+        say("Could not change the value");
+    }
+    if (ch != 0 &&!validInput(ch)) {
+        cerr << "Wrong input for State value. Expects 1 to 9" << endl;
+    }
+    // check if value is possible?
+    if (ch != 0)
+        value = ch;
+}
 

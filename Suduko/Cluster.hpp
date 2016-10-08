@@ -20,11 +20,12 @@ enum ClusterT {
 
 class Cluster {
 private:
-    ClusterT clusterType;
-    vector<Square *> squares;
-    int numSquares;
-    void addSquare(Square *square);
+    ClusterT clusterType; // the cluster type
+    vector<Square *> squares; // contains the 9 squares
+    static const char * clusterName[]; // The cluster type Name for print
+    void addSquare(Square *square) {squares.push_back(square);}
 public:
+    // Constructor with cluster type and 9 squares in a vector
     Cluster(ClusterT clusterType, vector<Square *> squares);
     void shoop(char val);
     ostream& print(ostream&) const;

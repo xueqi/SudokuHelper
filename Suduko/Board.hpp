@@ -18,21 +18,22 @@
 
 class Board {
 private:
-    Square bd[NSQUARES];
-    vector<Cluster> clusters;
+    Square bd[NSQUARES];  // The 81 squares
+    vector<Cluster *> clues;  // the 27 Cluster containing 9 COL, 9 ROW, 9 BOX
     
-    static const char * clusterName[];
-    void buildClusters();
+    void buildClusters();   // build all clusters from board
     
 public:
-    Board(const char * infile);
+    Board(const char * infile); // constructor with an input board file.
     ~Board();
-    ostream& print(ostream& out);
-    Square& sub(int row, int col);
+    ostream& print(ostream& out) const;
+    Square& sub(int row, int col); // base 1 index of square access
+    
+    // added to test the 27 clusters. 
+    void printCluster(ostream&);
 };
 
-// sub in Board is not const function, TODO: fix this to const
-inline ostream& operator<<(ostream& out, Board& b) {return b.print(out);}
+inline ostream& operator<<(ostream& out, const Board& b) {return b.print(out);}
 
 
 #endif /* Board_hpp */
